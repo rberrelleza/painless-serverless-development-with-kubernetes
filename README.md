@@ -1,6 +1,8 @@
 # painless-serverless-development-with-kubernetes
 Painless Serverless Development With Kubernetes
-https://spsna19.sched.com/event/Wb2t/painless-serverless-function-development-in-kubernetes-ramiro-berrelleza-okteto
+
+This demo is part of this talk: https://spsna19.sched.com/event/Wb2t/painless-serverless-function-development-in-kubernetes-ramiro-berrelleza-okteto
+
 
 # Prerequisites
 - A [running instance](https://docs.openfaas.com/deployment/kubernetes/) of OpenFaaS
@@ -10,7 +12,7 @@ https://spsna19.sched.com/event/Wb2t/painless-serverless-function-development-in
 - A DockerHub account
 
 
-# Steps
+# Develop directly in Kubernetes
 1. Login to your gateway
 
     ```
@@ -69,7 +71,7 @@ https://spsna19.sched.com/event/Wb2t/painless-serverless-function-development-in
     URL: https://openfaas-ingress-openfaas-rberrelleza.cloud.okteto.net/function/hello
     ```
 
-1. Call the hello function
+1. Call the hello function via the `faas invoke` command. Write `hello` and press (Control + D) to send the request.
 
     ```
     faas invoke hello -f hello.yml
@@ -89,13 +91,13 @@ https://spsna19.sched.com/event/Wb2t/painless-serverless-function-development-in
     okteto up
     ```
 
-1. Open `hello/handler.go` in your favorite IDE, and change the return message to:
+1. Open `function/handler.go` in your favorite IDE, and change the return message:
     
     ```
     w.Write([]byte(fmt.Sprintf("Hello Serverless Summit, input was: %s", string(input))))
     ```
 
-1. Start the function in your dev environment
+1. Start the function watchdog in your dev environment
 
     ```
     fwatchdog
@@ -133,3 +135,47 @@ https://spsna19.sched.com/event/Wb2t/painless-serverless-function-development-in
     ```
      ✓  Development environment deactivated
     ```
+
+# Debug a function in Kubernetes
+
+1. Launch your dev environment
+
+    ```
+    cd function
+    okteto up
+    ```
+
+1. Configure the function watchdog to launch the debugger
+
+    ```
+    export fprocess='dlv debug /home/app/handler --listen 0.0.0.0:2345 --api-version 2 --log --headless'
+    fwatchdog
+    ```
+
+    ```
+    Forking - dlv [debug /home/app/handler --listen 0.0.0.0:2345 --api-version 2 --log --headless]
+    2019/11/13 01:55:20 Started logging stderr from function.
+    2019/11/13 01:55:20 Started logging stdout from function.
+    2019/11/13 01:55:20 OperationalMode: http
+    2019/11/13 01:55:20 Timeouts: read: 10s, write: 10s hard: 10s.
+    2019/11/13 01:55:20 Listening on port: 8080
+    2019/11/13 01:55:20 Metrics listening on port: 8081
+    2019/11/13 01:55:20 Writing lock-file to: /tmp/.lock
+    ```
+
+1. Open this repo in a local instance of VS Code, and add a breakpoint in `function/handler.go` line 10.
+
+1. Press F5 to start the debugger
+
+1. Call the hello function via the `faas invoke` command. Write `hello` and press (Control + D) to send the request.
+
+    ```
+    faas invoke hello -f hello.yml
+    ```
+
+    ```
+    Reading from STDIN - hit (Control + D) to stop.
+    hello
+    ```
+
+1. The debugger will stop on the breakpoint. At this point you can control the flow, inspect values and continue the execution.

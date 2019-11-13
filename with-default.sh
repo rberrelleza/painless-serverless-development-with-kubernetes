@@ -1,2 +1,0 @@
-export fprocess='./handler'
-fwatchdog
