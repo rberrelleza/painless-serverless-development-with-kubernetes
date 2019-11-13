@@ -1,0 +1,18 @@
+FROM openfaas/of-watchdog:0.7.2 as watchdog
+
+FROM okteto/golang:1
+
+COPY --from=watchdog /fwatchdog /usr/bin/fwatchdog
+RUN chmod +x /usr/bin/fwatchdog
+
+RUN addgroup --gid 12000 app && \
+    adduser --home /home/app --uid 12000 --gid 12000 app
+
+USER app
+RUN mkdir -p /home/app/handler/function
+WORKDIR /home/app/handler
+
+COPY build/hello/main.go /home/app/handler
+COPY build/hello/go.mod  /home/app/handler
+
+CMD ["./fwatchdog"]
