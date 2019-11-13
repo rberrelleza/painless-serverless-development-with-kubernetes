@@ -10,12 +10,12 @@ RUN addgroup --gid 12000 app && \
 
 USER app
 RUN mkdir -p /home/app/handler/function
+WORKDIR /home/app/handler
+
 COPY build/hello/main.go /home/app/handler
 COPY build/hello/go.mod  /home/app/handler
 
-ENV fprocess="./handler"
+ENV fprocess="go run main.go"
 ENV mode="http"
 ENV upstream_url="http://127.0.0.1:8082"
-
-WORKDIR /home/app/handler/function
 CMD ["./fwatchdog"]
