@@ -15,7 +15,4 @@ WORKDIR /home/app/handler
 COPY build/hello/main.go /home/app/handler
 COPY build/hello/go.mod  /home/app/handler
 
-ENV fprocess="go run main.go"
-ENV mode="http"
-ENV upstream_url="http://127.0.0.1:8082"
 CMD ["./fwatchdog"]

@@ -5,6 +5,6 @@ provider:
 functions:
   hello:
     lang: golang-middleware
-    handler: ./hello
-    image: ramiro/hello-openfaas:latest
+    handler: ./function
+    image: ramiro/hello:latest
 
