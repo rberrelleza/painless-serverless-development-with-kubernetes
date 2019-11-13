@@ -1,0 +1,5 @@
+#!/bin/bash
+pushd /home/app/handler
+export fprocess='/home/app/handler/handler'
+fwatchdog
+popd

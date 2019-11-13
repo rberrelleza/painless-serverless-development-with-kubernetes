@@ -1,1 +1,0 @@
-export fprocess='./handler'

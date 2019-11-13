@@ -1,1 +1,0 @@
-export fprocess='dlv debug /home/app/handler --listen 0.0.0.0:2345 --api-version 2 --log --headless'

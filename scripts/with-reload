@@ -1,0 +1,5 @@
+#!/bin/bash
+pushd /home/app/handler
+export fprocess='go run main.go'
+fwatchdog
+popd

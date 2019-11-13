@@ -100,6 +100,7 @@ This demo is part of this talk: https://spsna19.sched.com/event/Wb2t/painless-se
 1. Start the function watchdog in your dev environment
 
     ```
+    cd /home/app/handler
     fwatchdog
     ```
 
@@ -148,6 +149,7 @@ This demo is part of this talk: https://spsna19.sched.com/event/Wb2t/painless-se
 1. Configure the function watchdog to launch the debugger
 
     ```
+    cd /home/app/handler
     export fprocess='dlv debug /home/app/handler --listen 0.0.0.0:2345 --api-version 2 --log --headless'
     fwatchdog
     ```
