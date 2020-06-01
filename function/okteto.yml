@@ -2,7 +2,7 @@
 name: hello                  
 labels:
   faas_function: hello
-image: okteto/golang-http-template:0.1.1
+image: okteto/golang-middleware-template:0.1.1
 command:
 - bash
 workdir: /home/app
