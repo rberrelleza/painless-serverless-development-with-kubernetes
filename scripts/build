@@ -1,4 +1,4 @@
 #!/bin/bash
-pushd /home/app/handler
-go build -o /home/app/handler/handler .
+pushd /home/app
+go build -o /home/app/handler .
 popd

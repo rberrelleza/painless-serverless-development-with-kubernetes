@@ -1,5 +1,5 @@
 #!/bin/bash
 pushd /home/app/handler
-export fprocess='/home/app/handler/handler'
+export fprocess='/home/app/handler'
 fwatchdog
 popd
